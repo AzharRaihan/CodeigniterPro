@@ -18,7 +18,7 @@ $(document).ready(function () {
 								<td>${item.name}</td>
 								<td>${item.email}</td>
 								<td>
-								<button type="button" value="${item.id}" class="action-btn btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"></i></button>
+								<button type="button" value="${item.id}" id="editBtn" class="action-btn btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"></i></button>
 								<button type="button" value="${item.id}" id="delBtn" class="action-btn btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
 								</td>
 							</tr>
@@ -29,7 +29,6 @@ $(document).ready(function () {
 		});
 	}
 	fatchAllData();
-
 
 	// Store Employee
 	$('#employeeSubmit').on('click', function (e) { 
@@ -44,13 +43,13 @@ $(document).ready(function () {
 			success: function (response) {
 				if(response.status == 'success'){
 					$(formData).trigger('reset');
-					$('#addEditModal').modal('hide');
+					$('#addModal').modal('hide');
 					$('#message').css('display', 'block');
 					$('.error-message').html('');
 					$('#message').html(`<div class="alert alert-success m-0"><strong>${response.message}</strong></div>`).delay(3000).slideUp(600);
 					fatchAllData();
 				}else{
-					$('#addEditModal').modal('show');
+					$('#addModal').modal('show');
 					$('.error-message').css('display', 'block');
 					$('.error-message').html(`<div class="alert alert-danger m-0"><strong>${response.message}</strong></div>`).delay(3000).slideUp(600);
 				}
@@ -63,6 +62,54 @@ $(document).ready(function () {
 		});
 	});
 
+	// Edit Data
+	$(document).on('click', '#editBtn', function (e) {
+		e.preventDefault();
+		let id = $(this).val();
+		$('#editModal').modal('show');
+		$.ajax({
+			type: "GET",
+			url: base_url+'Employee/employeeEdit/'+id,
+			caches: false,
+			success: function (response) {
+				if (response.status == 'success') {
+					$('#upId').val(response.data.id);
+					$('#eName').val(response.data.name);
+					$('#eEmail').val(response.data.name);
+				} else {
+					$('#message').css('display', 'block');
+					$('#message').html(`<div class="alert alert-danger m-0"><strong>Data Not Found</strong></div>`).delay(3000).slideUp(600);
+				}
+			}
+		});
+	});
+
+	// Update Data
+	$(document).on('click', '#employeeUpdate', function (e) { 
+		e.preventDefault();
+		let id = $('#upId').val();
+		let formData = $('#upEmployeeForm');
+		let data = formData.serialize();
+		$.ajax({
+			type: "POST",
+			url: base_url+'Employee/employeeAddEdit/'+id,
+			data: data,
+			success: function (response) {
+				if (response.status == 'success') {
+					$(formData).trigger('reset');
+					$('#editModal').modal('hide');
+					$('#message').css('display', 'block');
+					$('.up-error-message').html('');
+					$('#message').html(`<div class="alert alert-success m-0"><strong>${response.message}</strong></div>`).delay(3000).slideUp(600);
+					fatchAllData();
+				}else{
+					$('#editModal').modal('show');
+					$('.up-error-message').css('display', 'block');
+					$('.up-error-message').html(`<div class="alert alert-danger m-0"><strong>${response.message}</strong></div>`).delay(3000).slideUp(600);
+				}
+			}
+		});
+	});
 
 	// Delete Data
 	$(document).on('click', '#delBtn', function () { 
