@@ -1,0 +1,31 @@
+.btn:focus {
+	box-shadow: none;
+}
+.btn:active:focus {
+	box-shadow: none;
+}
+
+.bg-lightblue{
+	background-color: lightblue;
+}
+.bg-lightgreen{
+	background-color: lightgreen;
+}
+.bg-lightyellow{
+	background-color: lightyellow;
+}
+.bg-skyblue{
+	background-color: skyblue;
+}
+
+.form-control:focus {
+	box-shadow: none;
+}
+.action-btn{
+	height: 32px;
+	width: 32px;
+	border-radius: 50%;
+}
+.action-btn i{
+	font-size: 15px;
+}
