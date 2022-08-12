@@ -15,8 +15,10 @@ $(document).ready(function () {
 						$('#employee-table-body').append(`
 							<tr>
 								<th scope="row">${item.id}</th>
+								<td>${item.employee_id}</td>
 								<td>${item.name}</td>
 								<td>${item.email}</td>
+								<td>${item.gender}</td>
 								<td>
 								<button type="button" value="${item.id}" id="editBtn" class="action-btn btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"></i></button>
 								<button type="button" value="${item.id}" id="delBtn" class="action-btn btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
@@ -29,6 +31,24 @@ $(document).ready(function () {
 		});
 	}
 	fatchAllData();
+
+
+	// Employee Id Generate
+	$('#gender').change(function (e) { 
+		e.preventDefault();
+		let gen = $(this).val();
+		$.ajax({
+			type: "GET",
+			url: base_url+'Employee/employeeIdGenerate/'+gen,
+			data: gen,
+			caches: false,
+			success: function (response) {
+				if (response.status == 200) {
+					$('#employee_id').val(response.data);
+				}
+			}
+		});
+	});
 
 	// Store Employee
 	$('#employeeSubmit').on('click', function (e) { 

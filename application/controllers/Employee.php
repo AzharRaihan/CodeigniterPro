@@ -20,6 +20,7 @@ class Employee extends CI_Controller {
 	 */
 	public function employeeList()
 	{
+		$data['title'] = 'Home Page';
 		$data['html_content'] = $this->load->view('employee/employee-list', '', TRUE);
 		$this->load->view('index', $data);
 	}
@@ -42,6 +43,8 @@ class Employee extends CI_Controller {
 	{
 		$this->form_validation->set_rules('name', 'Name', 'required');
 		$this->form_validation->set_rules('email', 'Email', 'required');
+		$this->form_validation->set_rules('gender', 'Gender', 'required');
+		$this->form_validation->set_rules('employee_id', 'Employee Id', 'required|is_unique[employees.employee_id]');
 		if ($id == TRUE) {
 			if ($this->form_validation->run() == FALSE) {
 				$response = [
@@ -51,6 +54,8 @@ class Employee extends CI_Controller {
 			} else {
 				$data['name'] = $this->input->post('name');
 				$data['email'] = $this->input->post('email');
+				$data['gender'] = $this->input->post('gender');
+				$data['employee_id'] = $this->input->post('employee_id');
 				$this->common->updateData($data, $id, 'employees');
 				$response = [
 					'status' => 'success',
@@ -68,6 +73,8 @@ class Employee extends CI_Controller {
 			} else {
 				$data['name'] = $this->input->post('name');
 				$data['email'] = $this->input->post('email');
+				$data['gender'] = $this->input->post('gender');
+				$data['employee_id'] = $this->input->post('employee_id');
 				$this->common->insertData('employees', $data);
 				$response = [
 					'status' => 'success',
@@ -113,9 +120,32 @@ class Employee extends CI_Controller {
     }
 		$this->output->set_content_type('application/json')->set_output(json_encode($response));
 	}
+	/**
+	 * Generate Employee Id
+	 * Param $id,
+	 * return $response
+	 */
+	public function employeeIdGenerate($param)
+	{
+		// $gender = htmlspecialchars($this->input->post($this->security->xss_clean('gender')));
 
-
-
+		$counts = $this->db->query("SELECT count(*) as counts 
+			FROM employees 
+			WHERE employee_id = '$param' ")->row('counts');
+		if($param == 'M'){
+			$genEmpId = 'M-'.str_pad($counts + 1, 6, '0', STR_PAD_LEFT);   
+		}elseif($param == 'F'){
+			$genEmpId = 'F-'.str_pad($counts + 1, 6, '0', STR_PAD_LEFT);
+		}
+		else{
+			$genEmpId = 'O-'.str_pad($counts + 1, 6, '0', STR_PAD_LEFT);
+		}
+		$response = [
+			'status' => 200,
+			'data' => $genEmpId,
+		];
+		$this->output->set_content_type('application/json')->set_output(json_encode($response));
+	}
 
 
 

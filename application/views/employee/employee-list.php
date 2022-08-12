@@ -16,8 +16,10 @@
 							<thead>
 								<tr>
 									<th scope="col">SL</th>
+									<th scope="col">Employee Id</th>
 									<th scope="col">Name</th>
 									<th scope="col">Email</th>
+									<th scope="col">Gender</th>
 									<th scope="col">Action</th>
 								</tr>
 							</thead>
@@ -54,6 +56,19 @@
 						<input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
 						<span><?php echo form_error('email') ?></span>
 						<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+						<select class="form-select" aria-label="Default select example" name="gender" id="gender">
+							<option selected disabled>Select Gender</option>
+							<option value="M">Male</option>
+							<option value="F">Female</option>
+							<option value="O">Other</option>
+						</select>
+						</div>
+						<div class="col-md-6">
+							<input type="text" class="form-control" name="employee_id" id="employee_id">
+						</div>
 					</div>
       	</div>
 				<div class="modal-footer">
