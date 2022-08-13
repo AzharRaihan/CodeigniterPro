@@ -1,7 +1,7 @@
 <section class="py-5">
 	<div class="container">
 		<div class="row justify-content-center">
-			<div class="col-md-8">
+			<div class="col-md-10">
 				<div id="message" class="mb-2"></div>
 				<div class="card">
 					<div class="card-header d-flex justify-content-between align-items-center bg-skyblue">

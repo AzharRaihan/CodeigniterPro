@@ -54,4 +54,7 @@ class Common_model extends CI_Model {
 	{
 		return $this->db->delete($table_name, ['id'=> $id]);
 	}
+
+
+
 }

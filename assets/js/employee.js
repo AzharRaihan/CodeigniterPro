@@ -21,6 +21,7 @@ $(document).ready(function () {
 								<td>${item.gender}</td>
 								<td>
 								<button type="button" value="${item.id}" id="editBtn" class="action-btn btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"></i></button>
+								<a href="${base_url+'Employee/employeePdf/'+item.id}" class="action-btn btn bg-lightgreen btn-sm"><i class="fa-solid fa-file-pdf"></i></a>
 								<button type="button" value="${item.id}" id="delBtn" class="action-btn btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
 								</td>
 							</tr>

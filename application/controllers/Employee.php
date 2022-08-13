@@ -127,8 +127,6 @@ class Employee extends CI_Controller {
 	 */
 	public function employeeIdGenerate($param)
 	{
-		// $gender = htmlspecialchars($this->input->post($this->security->xss_clean('gender')));
-
 		$counts = $this->db->query("SELECT count(*) as counts 
 			FROM employees 
 			WHERE employee_id = '$param' ")->row('counts');
@@ -147,6 +145,16 @@ class Employee extends CI_Controller {
 		$this->output->set_content_type('application/json')->set_output(json_encode($response));
 	}
 
+
+
+	public function  employeePdf($id)
+	{
+		$this->load->library('pdf');
+		$empInfo = $this->common->editData($id, 'employees');
+		$this->load->view('employee/employee_pdf', $empInfo);
+		// $this->pdf->createPDF($data, 'extension', FALSE);
+
+	}
 
 
 }
